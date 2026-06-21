@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, X } from 'lucide-react';
+import { ArrowUpRight, X, ArrowLeft } from 'lucide-react';
 import { 
   StudentManagementDemo, ECommerceDemo, AIChatbotDemo, 
   JaneDoePortfolioDemo, AttendanceDemo 
@@ -319,7 +319,7 @@ export default function Portfolio() {
       {/* IMMERSIVE BROWSER MODAL OVERLAY */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-slate-950/40 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6 bg-slate-950/40 backdrop-blur-md">
             {/* Modal backdrop tap-to-dismiss */}
             <motion.div 
               initial={{ opacity: 0 }}
@@ -335,27 +335,38 @@ export default function Portfolio() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="w-full max-w-5xl h-[85vh] bg-white rounded-3xl border border-slate-200 shadow-2xl flex flex-col overflow-hidden relative z-10"
+              className="w-full md:max-w-5xl h-full md:h-[85vh] bg-white md:rounded-3xl border-0 md:border border-slate-200 shadow-2xl flex flex-col overflow-hidden relative z-10"
             >
               {/* Browser Header Bar */}
-              <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between shrink-0">
+              <div className="bg-slate-50 border-b border-slate-200 px-3 md:px-4 py-2.5 md:py-3 flex items-center justify-between gap-2 shrink-0">
                 {/* Simulated Window Control Actions */}
-                <div className="flex gap-1.5 items-center w-24">
+                <div className="flex items-center gap-1.5 md:w-24 shrink-0">
+                  {/* Desktop view window controls */}
+                  <div className="hidden md:flex gap-1.5 items-center">
+                    <button 
+                      onClick={() => setSelectedProject(null)}
+                      className="w-3 h-3 rounded-full bg-red-400 hover:bg-red-500 transition-colors flex items-center justify-center group cursor-pointer"
+                      title="Close"
+                    >
+                      <span className="text-[7px] text-red-800 font-bold opacity-0 group-hover:opacity-100 leading-none">×</span>
+                    </button>
+                    <span className="w-3 h-3 rounded-full bg-yellow-300"></span>
+                    <span className="w-3 h-3 rounded-full bg-green-400"></span>
+                  </div>
+                  {/* Mobile view back button */}
                   <button 
                     onClick={() => setSelectedProject(null)}
-                    className="w-3 h-3 rounded-full bg-red-400 hover:bg-red-500 transition-colors flex items-center justify-center group cursor-pointer"
-                    title="Close"
+                    className="md:hidden flex items-center gap-1 text-slate-655 hover:text-slate-900 p-1 rounded-lg hover:bg-slate-200/50"
                   >
-                    <span className="text-[7px] text-red-800 font-bold opacity-0 group-hover:opacity-100 leading-none">×</span>
+                    <ArrowLeft className="w-4 h-4 text-slate-500" />
+                    <span className="text-[10px] font-black uppercase tracking-wider">Back</span>
                   </button>
-                  <span className="w-3 h-3 rounded-full bg-yellow-300"></span>
-                  <span className="w-3 h-3 rounded-full bg-green-400"></span>
                 </div>
 
                 {/* Simulated address bar */}
-                <div className="flex items-center gap-1.5 bg-slate-200/50 border border-slate-350/20 rounded-lg px-3 py-1 text-[10px] text-slate-500 w-full max-w-md justify-center select-none font-mono">
-                  <span className="text-[8px] text-slate-400 font-sans tracking-wide">🔒 HTTPS</span>
-                  <span className="font-bold text-slate-700">
+                <div className="flex items-center gap-1 bg-slate-200/50 border border-slate-300/10 rounded-lg px-2.5 py-1 text-[9px] md:text-[10px] text-slate-500 max-w-[60%] md:max-w-md justify-center select-none font-mono truncate">
+                  <span className="text-[7.5px] md:text-[8px] text-slate-400 font-sans tracking-wide shrink-0">🔒 HTTPS</span>
+                  <span className="font-bold text-slate-700 truncate">
                     {selectedProject.mockType === 'dashboard' && 'student-portal.ottolabs.io'}
                     {selectedProject.mockType === 'store' && 'catalog-shop.ottolabs.io'}
                     {selectedProject.mockType === 'chatbot' && 'ai-assistant.ottolabs.io'}
@@ -365,15 +376,21 @@ export default function Portfolio() {
                 </div>
 
                 {/* Close Button on Right */}
-                <button 
-                  onClick={() => setSelectedProject(null)}
-                  className="w-24 flex justify-end text-slate-500 hover:text-slate-700 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-1 border border-slate-200 hover:border-slate-300 rounded-lg py-1 px-2.5 bg-white shadow-sm font-bold text-[10px] uppercase">
+                <div className="md:w-24 flex justify-end shrink-0">
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="hidden md:flex items-center gap-1 border border-slate-200 hover:border-slate-300 rounded-lg py-1 px-2.5 bg-white shadow-sm font-bold text-[10px] uppercase text-slate-550 hover:text-slate-700 cursor-pointer"
+                  >
                     <X className="w-3 h-3 text-slate-400" />
                     <span>Close</span>
-                  </div>
-                </button>
+                  </button>
+                  <button 
+                    onClick={() => setSelectedProject(null)}
+                    className="md:hidden p-1 text-slate-500 hover:text-slate-750"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Browser Body Area */}

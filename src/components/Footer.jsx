@@ -68,11 +68,11 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 items-center sm:items-start text-xs text-textSecondary font-semibold">
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-brandIndigo-500 shrink-0" />
-              <span>hello@ottolabs.dev</span>
+              <span>ottostudiosltd@gmail.com</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-brandIndigo-500 shrink-0" />
-              <span>+91 12345 67890</span>
+              <span>+91 70628 73490</span>
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-brandIndigo-500 shrink-0" />

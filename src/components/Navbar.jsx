@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Mail, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
@@ -13,6 +13,26 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleMobileLinkClick = (e, href) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    if (href === '#') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      setTimeout(() => {
+        const yOffset = -70; 
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }, 300);
+    }
+  };
 
   return (
     <motion.header 
@@ -96,7 +116,7 @@ export default function Navbar() {
                 <a 
                   key={link.name} 
                   href={link.href} 
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => handleMobileLinkClick(e, link.href)}
                   className="text-slate-600 hover:text-slate-900 font-semibold text-base py-2 border-b border-slate-100"
                 >
                   {link.name}
@@ -104,12 +124,25 @@ export default function Navbar() {
               ))}
               <a 
                 href="#contact" 
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => handleMobileLinkClick(e, '#contact')}
                 className="w-full flex items-center justify-center gap-1.5 py-3 bg-brandIndigo-600 hover:bg-brandIndigo-700 text-white rounded-lg font-bold text-center mt-2 shadow-md transition-colors"
               >
                 <span>Let's Talk</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
+
+              {/* Direct Quick Contacts */}
+              <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-3 text-sm text-slate-550 font-semibold">
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Get in Touch</span>
+                <a href="mailto:ottostudiosltd@gmail.com" className="flex items-center gap-2.5 hover:text-brandIndigo-600 transition-colors">
+                  <Mail className="w-4 h-4 text-brandIndigo-500 shrink-0" />
+                  <span>ottostudiosltd@gmail.com</span>
+                </a>
+                <a href="tel:7062873490" className="flex items-center gap-2.5 hover:text-brandIndigo-600 transition-colors">
+                  <Phone className="w-4 h-4 text-brandIndigo-500 shrink-0" />
+                  <span>+91 70628 73490</span>
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

@@ -83,11 +83,11 @@ export default function LeadCaptureForm() {
           <div className="flex flex-col gap-4 text-xs text-textSecondary font-semibold w-full max-w-sm">
             <div className="flex items-center gap-3 justify-center lg:justify-start">
               <Mail className="w-4 h-4 text-brandIndigo-500 shrink-0" />
-              <span>hello@ottolabs.dev</span>
+              <span>ottostudiosltd@gmail.com</span>
             </div>
             <div className="flex items-center gap-3 justify-center lg:justify-start">
               <Phone className="w-4 h-4 text-brandIndigo-500 shrink-0" />
-              <span>+91 12345 67890</span>
+              <span>+91 70628 73490</span>
             </div>
             <div className="flex items-center gap-3 justify-center lg:justify-start">
               <MapPin className="w-4 h-4 text-brandIndigo-500 shrink-0" />

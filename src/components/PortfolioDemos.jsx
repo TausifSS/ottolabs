@@ -84,9 +84,9 @@ export function StudentManagementDemo() {
   });
 
   return (
-    <div className="flex h-full bg-slate-50 text-slate-800 font-sans text-xs">
-      {/* Sidebar */}
-      <div className="w-48 bg-slate-900 text-slate-350 p-4 flex flex-col justify-between shrink-0">
+    <div className="flex flex-col md:flex-row h-full bg-slate-50 text-slate-800 font-sans text-xs overflow-hidden">
+      {/* Sidebar (Desktop Only) */}
+      <div className="hidden md:flex w-48 bg-slate-900 text-slate-350 p-4 flex flex-col justify-between shrink-0">
         <div>
           <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-3">
             <div className="w-6 h-6 rounded bg-brandIndigo-600 flex items-center justify-center text-white font-bold text-[10px]">OS</div>
@@ -122,6 +122,28 @@ export function StudentManagementDemo() {
         </div>
       </div>
 
+      {/* Mobile Top Tabs */}
+      <div className="md:hidden flex border-b border-slate-200 bg-slate-900 text-slate-300 select-none text-[9.5px] font-bold uppercase tracking-wider shrink-0">
+        <button 
+          onClick={() => setActiveTab('dashboard')} 
+          className={`flex-1 py-3 text-center border-b-2 transition-all ${activeTab === 'dashboard' ? 'border-brandIndigo-500 text-white bg-slate-850' : 'border-transparent text-slate-450'}`}
+        >
+          Dashboard
+        </button>
+        <button 
+          onClick={() => setActiveTab('students')} 
+          className={`flex-1 py-3 text-center border-b-2 transition-all ${activeTab === 'students' ? 'border-brandIndigo-500 text-white bg-slate-850' : 'border-transparent text-slate-450'}`}
+        >
+          Roster
+        </button>
+        <button 
+          onClick={() => setActiveTab('finances')} 
+          className={`flex-1 py-3 text-center border-b-2 transition-all ${activeTab === 'finances' ? 'border-brandIndigo-500 text-white bg-slate-850' : 'border-transparent text-slate-450'}`}
+        >
+          Finances
+        </button>
+      </div>
+
       {/* Main Content Pane */}
       <div className="flex-grow flex flex-col overflow-y-auto">
         <header className="bg-white border-b border-slate-200 py-3 px-6 flex justify-between items-center shadow-sm shrink-0">
@@ -136,7 +158,7 @@ export function StudentManagementDemo() {
           {activeTab === 'dashboard' && (
             <div className="flex flex-col gap-6">
               {/* Stat Cards */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col justify-between">
                   <span className="text-slate-400 uppercase font-black tracking-wider text-[9px] block">Total Students</span>
                   <div className="flex items-baseline gap-2 mt-1">
@@ -163,9 +185,9 @@ export function StudentManagementDemo() {
               </div>
 
               {/* Grid Section */}
-              <div className="grid grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 {/* Chart Mockup */}
-                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm col-span-3">
+                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm col-span-1 lg:col-span-3">
                   <h3 className="font-bold text-slate-900 mb-4 text-xs">Class Grade Distribution</h3>
                   <div className="flex flex-col gap-3">
                     {[
@@ -194,7 +216,7 @@ export function StudentManagementDemo() {
                 </div>
 
                 {/* Audit Logs */}
-                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm col-span-2 flex flex-col">
+                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm col-span-1 lg:col-span-2 flex flex-col">
                   <h3 className="font-bold text-slate-900 mb-3 text-xs">Recent Activities</h3>
                   <div className="flex-grow flex flex-col gap-3 overflow-y-auto">
                     <div className="border-l-2 border-brandIndigo-500 pl-3 py-0.5">
@@ -247,9 +269,9 @@ export function StudentManagementDemo() {
               </div>
 
               {/* Split layout: Form left, Table right */}
-              <div className="grid grid-cols-3 gap-6 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 {/* Roster Table */}
-                <div className="bg-white border border-slate-200 rounded-xl shadow-sm col-span-2 overflow-hidden">
+                <div className="bg-white border border-slate-200 rounded-xl shadow-sm col-span-1 lg:col-span-2 overflow-x-auto">
                   <table className="w-full border-collapse text-left">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200 text-slate-450 font-bold uppercase text-[9px] tracking-wider">
@@ -407,6 +429,7 @@ export function StudentManagementDemo() {
 export function ECommerceDemo() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [cart, setCart] = useState([]);
+  const [showMobileCart, setShowMobileCart] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [couponError, setCouponError] = useState('');
@@ -486,9 +509,9 @@ export function ECommerceDemo() {
     : catalog.filter(p => p.category === activeCategory);
 
   return (
-    <div className="flex h-full bg-[#fafafa] text-slate-800 font-sans text-xs relative">
+    <div className="flex h-full bg-[#fafafa] text-slate-800 font-sans text-xs relative overflow-hidden">
       {checkoutStep === 'checkingOut' && (
-        <div className="absolute inset-0 bg-white/80 z-20 flex flex-col items-center justify-center gap-3 backdrop-blur-sm">
+        <div className="absolute inset-0 bg-white/80 z-25 flex flex-col items-center justify-center gap-3 backdrop-blur-sm">
           <Loader2 className="w-8 h-8 text-brandIndigo-600 animate-spin" />
           <span className="font-bold text-slate-800 text-sm">Processing order & syncing Tally ERP ledger...</span>
           <span className="text-[10px] text-slate-400">Please do not reload or close.</span>
@@ -496,7 +519,7 @@ export function ECommerceDemo() {
       )}
 
       {checkoutStep === 'success' && (
-        <div className="absolute inset-0 bg-white z-20 flex flex-col items-center justify-center p-8 text-center">
+        <div className="absolute inset-0 bg-white z-25 flex flex-col items-center justify-center p-8 text-center overflow-y-auto">
           <motion.div 
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -507,7 +530,7 @@ export function ECommerceDemo() {
           </motion.div>
           
           <h2 className="text-lg font-bold text-slate-900 mb-1">B2B Order Placed Successfully!</h2>
-          <p className="text-slate-500 max-w-sm leading-relaxed mb-6">
+          <p className="text-slate-555 max-w-sm leading-relaxed mb-6">
             Your materials request has been logged. Our operations team is preparing shipment dispatch.
           </p>
 
@@ -517,15 +540,15 @@ export function ECommerceDemo() {
               <span className="px-1.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-600 font-extrabold text-[9px]">SYNCED OK</span>
             </div>
             <div className="flex justify-between text-[10px]">
-              <span className="text-slate-500 font-medium">Order Number:</span>
+              <span className="text-slate-550 font-medium">Order Number:</span>
               <span className="font-bold text-slate-800">#OT-592810</span>
             </div>
             <div className="flex justify-between text-[10px]">
-              <span className="text-slate-500 font-medium">Amount Synced:</span>
+              <span className="text-slate-550 font-medium">Amount Synced:</span>
               <span className="font-bold text-brandIndigo-600">₹{grandTotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-[10px]">
-              <span className="text-slate-500 font-medium">Auto-dispatch:</span>
+              <span className="text-slate-555 font-medium">Auto-dispatch:</span>
               <span className="text-slate-650 font-semibold">Ledger & Invoice PDF Sent via WhatsApp</span>
             </div>
           </div>
@@ -540,20 +563,20 @@ export function ECommerceDemo() {
       )}
 
       {/* Product Catalog view */}
-      <div className="flex-grow flex flex-col overflow-y-auto p-6 border-r border-slate-200">
-        <header className="flex justify-between items-center mb-6 shrink-0">
+      <div className="flex-grow flex flex-col overflow-y-auto p-6 border-r border-slate-200 pb-24">
+        <header className="flex justify-between items-center mb-6 shrink-0 gap-4">
           <div>
             <h1 className="text-slate-900 font-extrabold text-sm tracking-tight flex items-center gap-1.5">
               <ShoppingBag className="w-4 h-4 text-brandIndigo-500" /> Catalog Warehouse Shop
             </h1>
             <p className="text-[10px] text-slate-400">B2B bulk inventory materials outlet</p>
           </div>
-          <div className="flex gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+          <div className="flex gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200 max-w-[180px] overflow-x-auto shrink-0 scrollbar-none">
             {['All', 'Steel', 'Cement', 'Mesh'].map(cat => (
               <button 
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer ${activeCategory === cat ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                className={`px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer ${activeCategory === cat ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-550 hover:text-slate-900'}`}
               >
                 {cat}
               </button>
@@ -562,7 +585,7 @@ export function ECommerceDemo() {
         </header>
 
         {/* Catalog Grid */}
-        <div className="grid grid-cols-2 gap-4 flex-grow content-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow content-start">
           {filteredCatalog.map(prod => (
             <div key={prod.id} className="bg-white border border-slate-200 rounded-xl p-3.5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
               <div>
@@ -590,8 +613,8 @@ export function ECommerceDemo() {
         </div>
       </div>
 
-      {/* Cart Summary Panel */}
-      <div className="w-72 bg-white flex flex-col justify-between shrink-0">
+      {/* Desktop Cart Summary Panel */}
+      <div className="hidden md:flex w-72 bg-white flex flex-col justify-between shrink-0 border-l border-slate-200">
         {/* Header */}
         <div className="p-4 border-b border-slate-200 bg-slate-50/50 flex justify-between items-center">
           <div className="flex items-center gap-1.5 font-bold text-slate-800">
@@ -608,7 +631,7 @@ export function ECommerceDemo() {
           {cart.length === 0 ? (
             <div className="flex-grow flex flex-col items-center justify-center text-slate-400 gap-1 h-full py-12">
               <ShoppingCart className="w-6 h-6 text-slate-300 stroke-[1.5]" />
-              <p className="font-semibold text-slate-650">Cart is empty.</p>
+              <p className="font-semibold text-slate-655">Cart is empty.</p>
               <p className="text-[9px] text-slate-400 text-center max-w-[150px]">Choose bulk materials from the warehouse catalog panel.</p>
             </div>
           ) : (
@@ -662,7 +685,7 @@ export function ECommerceDemo() {
 
           <div className="flex flex-col gap-1.5 text-[10px] border-t border-slate-200/60 pt-3">
             <div className="flex justify-between">
-              <span className="text-slate-550">Subtotal:</span>
+              <span className="text-slate-555">Subtotal:</span>
               <span className="font-semibold text-slate-800">₹{subtotal.toLocaleString()}</span>
             </div>
             {discountPercent > 0 && (
@@ -672,7 +695,7 @@ export function ECommerceDemo() {
               </div>
             )}
             <div className="flex justify-between">
-              <span className="text-slate-550">GST (18%):</span>
+              <span className="text-slate-555">GST (18%):</span>
               <span className="font-semibold text-slate-800">₹{gstAmount.toLocaleString()}</span>
             </div>
             <div className="flex justify-between border-t border-slate-200/50 pt-2 text-[11px]">
@@ -691,6 +714,137 @@ export function ECommerceDemo() {
           </button>
         </div>
       </div>
+
+      {/* Mobile Floating Cart Bar */}
+      {cart.length > 0 && !showMobileCart && (
+        <motion.div 
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          onClick={() => setShowMobileCart(true)}
+          className="md:hidden fixed bottom-6 left-6 right-6 bg-brandIndigo-600 text-white rounded-2xl p-3.5 shadow-xl flex justify-between items-center z-10 cursor-pointer border border-brandIndigo-500/50 shadow-brandIndigo-550/20 select-none"
+        >
+          <div className="flex items-center gap-2 font-bold text-xs">
+            <ShoppingCart className="w-4 h-4" />
+            <span>View Cart ({cart.reduce((sum, item) => sum + item.qty, 0)})</span>
+          </div>
+          <span className="font-black text-xs">₹{grandTotal.toLocaleString()}</span>
+        </motion.div>
+      )}
+
+      {/* Mobile Cart Overlay Drawer */}
+      <AnimatePresence>
+        {showMobileCart && (
+          <motion.div 
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+            className="md:hidden fixed inset-0 bg-white z-30 flex flex-col justify-between"
+          >
+            {/* Header */}
+            <div className="p-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center shrink-0">
+              <div className="flex items-center gap-1.5 font-bold text-slate-800">
+                <ShoppingCart className="w-4 h-4 text-brandIndigo-500" />
+                <span className="text-xs">Order Cart</span>
+              </div>
+              <button 
+                onClick={() => setShowMobileCart(false)}
+                className="text-slate-500 hover:text-slate-700 p-1 border border-slate-250 bg-white rounded-lg flex items-center gap-1 text-[9px] font-bold uppercase shadow-sm cursor-pointer"
+              >
+                <X className="w-3 h-3 text-slate-400" />
+                <span>Close</span>
+              </button>
+            </div>
+
+            {/* Cart items list */}
+            <div className="flex-grow p-4 overflow-y-auto flex flex-col gap-3">
+              {cart.length === 0 ? (
+                <div className="flex-grow flex flex-col items-center justify-center text-slate-400 gap-1 h-full py-12">
+                  <ShoppingCart className="w-6 h-6 text-slate-300 stroke-[1.5]" />
+                  <p className="font-semibold text-slate-650">Cart is empty.</p>
+                </div>
+              ) : (
+                cart.map(item => (
+                  <div key={item.id} className="flex gap-2.5 border-b border-slate-100 pb-2.5 last:border-0">
+                    <div className="flex-grow min-w-0">
+                      <span className="font-bold text-slate-850 text-xs block truncate leading-tight">{item.name}</span>
+                      <span className="text-[10px] text-brandIndigo-600 font-extrabold mt-0.5 block">₹{(item.price * item.qty).toLocaleString()}</span>
+                      <span className="text-[9px] text-slate-450 font-medium">({item.qty} × ₹{item.price.toLocaleString()})</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-end gap-1.5 shrink-0 justify-between">
+                      <button 
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-red-500 hover:text-red-700 p-0.5 hover:bg-red-55 rounded cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                      <div className="flex items-center border border-slate-200 rounded overflow-hidden bg-slate-50 text-[10px] font-semibold">
+                        <button onClick={() => updateQty(item.id, -1)} className="px-2 py-0.5 hover:bg-slate-200 font-bold cursor-pointer">-</button>
+                        <span className="px-2 text-[9px] font-black text-slate-800">{item.qty}</span>
+                        <button onClick={() => updateQty(item.id, 1)} className="px-2 py-0.5 hover:bg-slate-200 font-bold cursor-pointer">+</button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Footer Billing details */}
+            <div className="p-4 border-t border-slate-200 bg-slate-50 flex flex-col gap-3 shrink-0 pb-8">
+              <form onSubmit={handleApplyCoupon} className="flex gap-1.5">
+                <input 
+                  type="text" 
+                  placeholder="Promo: OTTO10" 
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                  disabled={discountPercent > 0}
+                  className="border border-slate-200 rounded-xl px-3 py-2 outline-none text-[10px] uppercase font-bold flex-grow bg-white placeholder:text-slate-400 placeholder:normal-case focus:border-brandIndigo-500"
+                />
+                <button 
+                  type="submit" 
+                  disabled={discountPercent > 0}
+                  className="bg-slate-800 text-white font-bold px-3 py-2 rounded-xl text-[10px] uppercase hover:bg-slate-900 disabled:bg-slate-350 disabled:cursor-not-allowed select-none cursor-pointer"
+                >
+                  Apply
+                </button>
+              </form>
+              {couponError && <p className="text-red-550 text-[10px] font-semibold leading-none">{couponError}</p>}
+              {couponSuccess && <p className="text-emerald-600 text-[10px] font-bold leading-none">{couponSuccess}</p>}
+
+              <div className="flex flex-col gap-1.5 text-[11px] border-t border-slate-200 pt-3">
+                <div className="flex justify-between">
+                  <span className="text-slate-555">Subtotal:</span>
+                  <span className="font-semibold text-slate-850">₹{subtotal.toLocaleString()}</span>
+                </div>
+                {discountPercent > 0 && (
+                  <div className="flex justify-between text-emerald-600">
+                    <span>Discount (10%):</span>
+                    <span>-₹{discountAmount.toLocaleString()}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-slate-555">GST (18%):</span>
+                  <span className="font-semibold text-slate-850">₹{gstAmount.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between border-t border-slate-200 pt-2 text-[12px]">
+                  <span className="font-black text-slate-850">Grand Total:</span>
+                  <span className="font-black text-brandIndigo-600">₹{grandTotal.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <button 
+                onClick={handleCheckout}
+                disabled={cart.length === 0}
+                className="w-full bg-brandIndigo-600 hover:bg-brandIndigo-700 text-white text-[11px] font-black py-3 rounded-xl uppercase shadow-md disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed select-none flex items-center justify-center gap-1 mt-1 shadow-brandIndigo-550/20 cursor-pointer"
+              >
+                Place Bulk Order
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -831,7 +985,7 @@ export function AIChatbotDemo() {
   return (
     <div className="flex h-full bg-[#fafafa] text-slate-800 font-sans text-xs">
       {/* Threads list bar */}
-      <div className="w-48 bg-slate-900 text-slate-350 p-4 flex flex-col justify-between shrink-0 border-r border-slate-800">
+      <div className="hidden md:flex w-48 bg-slate-900 text-slate-350 p-4 flex-col justify-between shrink-0 border-r border-slate-800">
         <div>
           <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-3">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -879,12 +1033,47 @@ export function AIChatbotDemo() {
       {/* Main chat console window */}
       <div className="flex-grow flex flex-col justify-between bg-slate-50">
         {/* Header */}
-        <header className="bg-white border-b border-slate-200 py-3 px-6 flex justify-between items-center shadow-sm shrink-0">
+        <header className="bg-white border-b border-slate-200 py-2.5 md:py-3 px-4 md:px-6 flex flex-col sm:flex-row gap-2 justify-between items-start sm:items-center shadow-sm shrink-0">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span className="font-bold text-slate-900 text-xs">Otto Bot Interface</span>
           </div>
-          <span className="text-[9px] bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded-full font-bold">
+
+          {/* Thread switcher dropdown - Mobile Only */}
+          <div className="md:hidden w-full sm:w-auto">
+            <select
+              value={activeThread}
+              onChange={(e) => {
+                const threadId = parseInt(e.target.value);
+                setActiveThread(threadId);
+                if (threadId === 1) {
+                  setMessages([
+                    { id: 1, sender: 'bot', text: "Hello! Tuesday Fe500 stock rod delivery is locked. Pushed Tally ledger.", timestamp: "10:14 AM" },
+                    { id: 2, sender: 'user', text: "Perfect, thank you!", timestamp: "10:15 AM" }
+                  ]);
+                } else if (threadId === 2) {
+                  setMessages([
+                    { id: 1, sender: 'bot', text: "Database connection failed for Tally API. Re-authenticating credentials.", timestamp: "09:30 AM" },
+                    { id: 2, sender: 'user', text: "Let's check sync history.", timestamp: "09:32 AM" },
+                    { id: 3, sender: 'bot', text: "Running diagnostic... Synced 4 registers. Log file exported successfully.", timestamp: "09:33 AM" }
+                  ]);
+                } else {
+                  setMessages([
+                    { id: 1, sender: 'bot', text: "Logistics truck dispatch status: Order #4023 left Delhi Cargo hub.", timestamp: "08:10 AM" }
+                  ]);
+                }
+              }}
+              className="w-full bg-slate-50 border border-slate-200 text-slate-700 px-2 py-1 rounded text-[10px] font-bold focus:outline-none focus:ring-1 focus:ring-brandIndigo-500"
+            >
+              {threads.map(thread => (
+                <option key={thread.id} value={thread.id}>
+                  {thread.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <span className="hidden sm:inline-block text-[9px] bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded-full font-bold">
             OpenAI Engine Bridged
           </span>
         </header>
@@ -1071,7 +1260,7 @@ export function JaneDoePortfolioDemo() {
         {/* Project Showreel section */}
         <section>
           <span className="text-[8px] font-black uppercase tracking-[0.2em] block mb-3 opacity-60">Featured Blueprints</span>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { title: "Horizon Villa", loc: "Goa, India", size: "6,400 sqft" },
               { title: "Slate Office Complex", loc: "Pune, India", size: "28,000 sqft" }
@@ -1274,56 +1463,58 @@ export function AttendanceDemo() {
             <span className="text-brandIndigo-600 font-extrabold">{attendanceRate}% Rate</span>
           </div>
 
-          <table className="w-full text-left">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-450 font-bold uppercase text-[9.5px] tracking-wider">
-                <th className="p-3">Employee Name</th>
-                <th className="p-3">Designation</th>
-                <th className="p-3">Clock-In</th>
-                <th className="p-3">Status (Click to toggle)</th>
-                <th className="p-3 text-right">Remarks</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {workers.map(w => (
-                <tr key={w.id} className="hover:bg-slate-50/30">
-                  <td className="p-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-slate-650 font-bold flex items-center justify-center text-[9.5px]">
-                        {w.name.split(' ').map(n => n[0]).join('')}
-                      </div>
-                      <div>
-                        <span className="font-bold text-slate-900 block">{w.name}</span>
-                        {w.note && (
-                          <span className="text-[8.5px] text-brandIndigo-600 font-semibold bg-indigo-50 px-1 py-0.5 rounded mt-0.5 inline-block max-w-[120px] truncate" title={w.note}>
-                            📝 {w.note}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-3 font-semibold text-slate-650">{w.role}</td>
-                  <td className="p-3 font-mono font-medium text-slate-700">{w.time}</td>
-                  <td className="p-3">
-                    <button 
-                      onClick={() => toggleWorkerStatus(w.id)}
-                      className={`px-1.5 py-0.5 rounded border text-[9.5px] font-black uppercase transition-all cursor-pointer ${getStatusStyles(w.status)}`}
-                    >
-                      {w.status}
-                    </button>
-                  </td>
-                  <td className="p-3 text-right">
-                    <button 
-                      onClick={() => handleOpenNote(w)}
-                      className="text-brandIndigo-600 hover:text-brandIndigo-800 font-bold text-[9.5px] uppercase cursor-pointer"
-                    >
-                      {w.note ? "Edit Note" : "+ Add Note"}
-                    </button>
-                  </td>
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-450 font-bold uppercase text-[9.5px] tracking-wider whitespace-nowrap">
+                  <th className="p-3">Employee Name</th>
+                  <th className="p-3">Designation</th>
+                  <th className="p-3">Clock-In</th>
+                  <th className="p-3">Status (Click to toggle)</th>
+                  <th className="p-3 text-right">Remarks</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {workers.map(w => (
+                  <tr key={w.id} className="hover:bg-slate-50/30 whitespace-nowrap">
+                    <td className="p-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 text-slate-650 font-bold flex items-center justify-center text-[9.5px]">
+                          {w.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <span className="font-bold text-slate-900 block">{w.name}</span>
+                          {w.note && (
+                            <span className="text-[8.5px] text-brandIndigo-600 font-semibold bg-indigo-50 px-1 py-0.5 rounded mt-0.5 inline-block max-w-[120px] truncate" title={w.note}>
+                              📝 {w.note}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3 font-semibold text-slate-650">{w.role}</td>
+                    <td className="p-3 font-mono font-medium text-slate-700">{w.time}</td>
+                    <td className="p-3">
+                      <button 
+                        onClick={() => toggleWorkerStatus(w.id)}
+                        className={`px-1.5 py-0.5 rounded border text-[9.5px] font-black uppercase transition-all cursor-pointer ${getStatusStyles(w.status)}`}
+                      >
+                        {w.status}
+                      </button>
+                    </td>
+                    <td className="p-3 text-right">
+                      <button 
+                        onClick={() => handleOpenNote(w)}
+                        className="text-brandIndigo-600 hover:text-brandIndigo-800 font-bold text-[9.5px] uppercase cursor-pointer"
+                      >
+                        {w.note ? "Edit Note" : "+ Add Note"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Right Pane Sidebar - Stats & Remarks Form */}
