@@ -30,7 +30,7 @@ export default function LeadCaptureForm() {
 
     try {
       const formData = new FormData();
-      formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "e65742dc-6fc0-4df5-9be8-8e9fba1c998a");
+      formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "abf12609-dd87-489e-a838-81717743496f");
       formData.append("name", fullName);
       formData.append("email", email);
       formData.append("phone", `+91 ${phoneVal}`);
