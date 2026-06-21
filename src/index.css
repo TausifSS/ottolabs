@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brandDark: #ffffff;
+  --color-brandIndigo-500: #4f46e5;
+  --color-brandIndigo-600: #4338ca;
+  --color-brandIndigo-700: #3730a3;
+  --color-brandTeal-500: #0d9488;
+  --color-brandTeal-600: #0f766e;
+  --color-brandGreen-500: #16a34a;
+  --color-brandGreen-600: #15803d;
+  --color-textPrimary: #0f172a;
+  --color-textSecondary: #475569;
+  --color-textMuted: #94a3b8;
+  
+  --font-header: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+  
+  --animate-float-slow: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  background-color: #fafafa;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Premium Styling Layer */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-indigo-500 to-sky-500;
+}
+
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-xl border border-slate-200/50;
+}
+
+.glass-panel-hover {
+  @apply transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)];
+}
+
+.glass-panel-hover:hover {
+  @apply bg-white/95 border-slate-200 -translate-y-1 shadow-xl shadow-slate-200/40;
+}
+
+/* Custom Typing Indicator animations */
+.typing-dot {
+  animation: typing 1s infinite alternate;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0% { transform: translateY(0px); opacity: 0.3; }
+  100% { transform: translateY(-4px); opacity: 1; }
+}
