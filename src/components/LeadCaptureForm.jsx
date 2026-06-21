@@ -29,24 +29,22 @@ export default function LeadCaptureForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          service_id: 'service_0cqtgyb',
-          template_id: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'your_template_id',
-          user_id: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'your_public_key',
-          template_params: {
-            name: fullName,
-            time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
-            message: `• Category: ${category.toUpperCase()}\n• WhatsApp: +91 ${phoneVal}\n• Email: ${email}\n\n• Requirements:\n${message}`,
-          },
-        }),
+      const formData = new FormData();
+      formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "e65742dc-6fc0-4df5-9be8-8e9fba1c998a");
+      formData.append("name", fullName);
+      formData.append("email", email);
+      formData.append("phone", `+91 ${phoneVal}`);
+      formData.append("category", category.toUpperCase());
+      formData.append("message", message);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (data.success) {
         setIsSuccess(true);
         // Clear forms
         setFullName('');
@@ -54,12 +52,11 @@ export default function LeadCaptureForm() {
         setPhone('');
         setMessage('');
       } else {
-        const errText = await response.text();
-        console.error("EmailJS Send Failure:", errText);
-        alert("Failed to submit form. Please verify your EmailJS keys in the .env file.");
+        console.error("Web3Forms Send Failure:", data.message);
+        alert("Failed to submit form. Please verify your Web3Forms key in the .env file.");
       }
     } catch (error) {
-      console.error("EmailJS Network Error:", error);
+      console.error("Web3Forms Network Error:", error);
       alert("Network error. Please check your internet connection.");
     } finally {
       setIsSubmitting(false);
